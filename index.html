@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Material Replacement</title>
+    <link rel="stylesheet" href="styles.css?v=photoshop-20260916-3" />
+    <link rel="stylesheet" href="panorama.css?v=photoshop-20260916-3" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Bathroom material visualizer">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Bathroom collection</p>
+            <h1>3D Material Replacement</h1>
+          </div>
+          <button class="reset-button" id="resetButton" type="button">
+            <svg class="reset-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Reset all</span>
+          </button>
+        </header>
+
+        <div class="visualizer-card">
+          <div class="view-switch compare-control" role="group" aria-label="Viewing mode"><button id="flatView" type="button" aria-pressed="true">Flat view</button><button id="panoramaView" type="button" aria-pressed="false">360&#176; view</button></div>
+          <div class="scene-toolbar"><span>Contemporary bathroom</span><div class="compare-control" role="group" aria-label="Compare designs"><button id="originalButton" type="button" aria-pressed="false">Original</button><button id="designButton" type="button" aria-pressed="true">Your design</button></div></div>
+          <div class="stage" id="stage">
+            <div id="panorama" tabindex="0" role="application" aria-label="360 degree bathroom. Drag to look around, scroll to zoom, arrow keys to rotate."></div>
+            <div class="panorama-controls"><button id="zoomIn" type="button" title="Zoom in" aria-label="Zoom in">+</button><button id="zoomOut" type="button" title="Zoom out" aria-label="Zoom out">&minus;</button><button id="centerView" type="button">Recenter</button></div>
+            <img
+              class="base-image"
+              src="assets/bathroom-panorama.png"
+              alt="Modern bathroom panorama with selectable floor, vanity, and bathtub wall surfaces"
+              draggable="false"
+            />
+
+            <svg class="replacement-map" id="replacementMap" viewBox="0 0 1779 884" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+            <svg class="hotspot-map" viewBox="0 0 1779 884" preserveAspectRatio="none" aria-label="Selectable replacement regions">
+              <g class="hotspot-button" data-target="floor" role="button" tabindex="0" aria-label="Select marble floor replacement">
+                <polygon
+                  class="hotspot-shape"
+                  points="0,704 105,685 260,696 472,690 563,672 735,706 918,712 1025,672 1160,694 1285,668 1438,662 1507,710 1620,708 1779,704 1779,884 0,884"
+                ></polygon>
+              </g>
+              <g class="hotspot-button" data-target="vanity" role="button" tabindex="0" aria-label="Select wash basin and counter replacement">
+                <polygon
+                  class="hotspot-shape"
+                  points="563,540 698,497 841,500 1006,522 1089,568 1080,622 960,678 722,674 558,619"
+                ></polygon>
+              </g>
+              <g class="hotspot-button" data-target="bathWall" role="button" tabindex="0" aria-label="Select bathtub wall replacement">
+                <polygon
+                  class="hotspot-shape"
+                  points="88,190 210,224 390,229 523,218 661,197 663,558 542,590 360,612 196,596 90,558"
+                ></polygon>
+              </g>
+            </svg>
+
+            <button class="surface-pin pin-floor" data-surface="floor" aria-label="Select floor" type="button">1</button>
+            <button class="surface-pin pin-vanity" data-surface="vanity" aria-label="Select vanity" type="button">2</button>
+            <button class="surface-pin pin-wall" data-surface="bathWall" aria-label="Select feature wall" type="button">3</button>
+          </div>
+          <div class="scene-footer"><span>Bathroom</span><span id="changeCount">Original finishes</span></div>
+          <section class="selection-summary" aria-label="Current selections"><h2>Current selections</h2><div id="palette"></div></section>
+        </div>
+
+        <aside class="material-panel" id="materialPanel" aria-live="polite">
+          <div class="panel-header"><p class="eyebrow">The design studio</p><h2>A room, reimagined.</h2><p>Find your mood. Make it yours.</p></div>
+          <div class="studio-tabs" role="group" aria-label="Design tools">
+            <button type="button" data-mode="individual" aria-pressed="true" aria-controls="individualPanel">Mix your own</button>
+            <button type="button" data-mode="looks" aria-pressed="false" aria-controls="looksPanel">Explore looks</button>
+          </div>
+          <div id="individualPanel">
+            <div class="surface-tabs" role="group" aria-label="Select a surface">
+              <button data-surface="floor" type="button" aria-pressed="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2 19h20L18.5 5h-13L2 19z"/><path d="M12 5v14"/><path d="M3.8 12h16.4"/></svg>
+                <span class="tab-label">Floor</span>
+              </button>
+              <button data-surface="vanity" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12h16c0 4.2-3.3 7-8 7s-8-2.8-8-7z"/><path d="M9 12V6.5a2.5 2.5 0 0 1 2.5-2.5h2"/><path d="M13.5 4v2"/><path d="M2 20h20"/></svg>
+                <span class="tab-label">Washbasin</span>
+              </button>
+              <button data-surface="bathWall" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.5h18"/><path d="M3 15h18"/><path d="M9 4v5.5"/><path d="M15 4v5.5"/><path d="M6 9.5v5.5"/><path d="M12 9.5v5.5"/><path d="M18 9.5v5.5"/><path d="M9 15v5"/><path d="M15 15v5"/></svg>
+                <span class="tab-label">Wall</span>
+              </button>
+              <button data-surface="door" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 21V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><rect x="7" y="6" width="10" height="5.5" rx="0.5"/><rect x="7" y="13.5" width="10" height="5.5" rx="0.5"/><circle cx="15.5" cy="12" r="0.75" fill="currentColor"/></svg>
+                <span class="tab-label">Door</span>
+              </button>
+              <button data-surface="towel" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 5h16"/><path d="M4 4v2"/><path d="M20 4v2"/><path d="M7 5v13.5a1.5 1.5 0 0 0 1.5 1.5h7a1.5 1.5 0 0 0 1.5-1.5V5"/><path d="M7 16h10"/></svg>
+                <span class="tab-label">Towel</span>
+              </button>
+              <button data-surface="chair" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 4h12a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a2 2 0 0 1 2-2z"/><path d="M3 13h18v2.5a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 15.5V13z"/><path d="M6 17l-1.5 4"/><path d="M18 17l1.5 4"/></svg>
+                <span class="tab-label">Chair</span>
+              </button>
+              <button data-surface="ceiling" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2 4h20"/><path d="M12 4v6"/><path d="M8 14c0-2.2 1.8-4 4-4s4 1.8 4 4H8z"/><path d="M10 16.5l-.8 1.5"/><path d="M12 16.5v1.5"/><path d="M14 16.5l.8 1.5"/></svg>
+                <span class="tab-label">Ceiling</span>
+              </button>
+              <button data-surface="mirror" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 20V9a6 6 0 0 1 12 0v11H6z"/><path d="M10 8l3 3"/><path d="M11 6l1 1"/><path d="M4 20h16"/></svg>
+                <span class="tab-label">Mirror</span>
+              </button>
+            </div>
+            <div class="panel-copy">
+              <div class="finish-heading"><h2 id="panelTitle">Choose a surface</h2><span id="optionCount">2 finishes</span></div>
+              <p id="panelText">Click the floor, wash basin area, or bathtub wall to preview replacement materials.</p>
+            </div>
+            <div class="swatch-grid" id="swatchGrid"></div>
+          </div>
+          <div id="looksPanel" hidden>
+            <div class="look-intro"><span>ONE ROOM. TWO POSSIBILITIES.</span><p>A whole new atmosphere in one click.</p></div>
+            <div class="look-selector" role="group" aria-label="Browse complete looks">
+              <button type="button" data-preview="classic" aria-pressed="true"><strong>Warm Classic</strong></button>
+              <button type="button" data-preview="modern" aria-pressed="false"><strong>Modern Contrast</strong></button>
+            </div>
+            <article class="look-story">
+              <div class="look-art"><img id="lookImage" src="assets/variants/room-classic-thumb.jpg" alt="Warm Classic bathroom preview" /><span class="look-tag" id="lookTag">THE SOFTER SIDE</span><span class="look-number" id="lookNumber">01 / 02</span></div>
+              <div class="look-details">
+                <h3 id="lookTitle">Warm Classic</h3>
+                <p id="lookDescription">Quiet stone. Warm walnut. A little everyday escape.</p>
+                <div class="look-materials" id="lookMaterials" aria-label="Materials in this look"></div>
+                <button class="try-look" id="tryLook" data-look="classic" type="button" aria-pressed="false"><span>Try this look</span><span aria-hidden="true">↗</span></button>
+                <p class="look-reassurance" id="lookReassurance">8 coordinated finishes · Yours to remix</p>
+              </div>
+            </article>
+            <button class="remix-link" type="button" id="remixButton">Have something else in mind? <strong>Mix your own →</strong></button>
+          </div>
+          <span id="hintPill" role="status" aria-live="polite" class="sr-only">Original finishes</span>
+        </aside>
+      </section>
+      <footer class="app-footer"><span>3D MATERIAL REPLACEMENT</span><span>Bathroom collection</span></footer>
+    </main>
+
+    <script src="raster-masks.js?v=photoshop-20260916-3"></script>
+    <script src="app.js?v=photoshop-20260916-3"></script>
+    <script src="assets/three.min.js"></script>
+    <script src="panorama.js?v=photoshop-20260916-3"></script>
+  </body>
+</html>
