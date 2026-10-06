@@ -4,7 +4,8 @@
   let modelSelections = {};
   let loading;
   let request = 0;
-  const panoramaLabels = Object.fromEntries(Object.entries(targets).map(([key,target]) => [key,{title:target.title,text:target.text}]));
+  const panoramaLabels = Object.fromEntries(Object.entries(targets).map(([key,target]) => [key,{title:target.title,text:target.text,hint:target.hint}]));
+  const panoramaLookDescriptions=Object.fromEntries(Object.entries(tileLooks).map(([key,look])=>[key,look.description]));
   window.roomMode = 'flat';
   async function switchMode(mode) {
     const token = ++request;
@@ -12,7 +13,7 @@
       hintPill.textContent = 'Loading 3D studio…';
       document.querySelector('#modelView').disabled = true;
       try {
-        loading ||= import('./assets/walkthrough.bundle.js?v=20261006-authored-finish-2');
+        loading ||= import('./assets/walkthrough.bundle.js?v=20261006-vanity-light-3');
         const module = await loading;
         if (!window.walkthrough) window.walkthrough = module.createWalkthrough();
       } catch (error) {
@@ -33,13 +34,16 @@
     window.roomMode = mode;
     for(const [key,target] of Object.entries(targets))Object.assign(target,panoramaLabels[key]);
     if(mode === '3d'){
-      Object.assign(targets.mirrorWall,{title:'Feature wall',text:'Replace the feature wall finish while preserving the model.'});
-      Object.assign(targets.bathWall,{title:'Room walls',text:'Replace the room wall finishes while preserving fixtures and details.'});
+      Object.assign(targets.mirrorWall,{title:'Vanity wall',text:'Tiles behind the mirrors and washbasins.',hint:'Vanity wall selected'});
+      Object.assign(targets.bathWall,{title:'Shower walls',text:'Tiles around the shower enclosure.',hint:'Shower walls selected'});
     }
-    document.querySelector('.surface-tabs [data-surface="mirrorWall"] .tab-label').textContent = mode === '3d' ? 'Feature wall' : 'Mirror wall';
-    document.querySelector('.surface-tabs [data-surface="bathWall"] .tab-label').textContent = mode === '3d' ? 'Room walls' : 'Shower wall';
+    document.querySelector('.surface-tabs [data-surface="mirrorWall"] .tab-label').textContent = mode === '3d' ? 'Vanity wall' : 'Mirror wall';
+    document.querySelector('.surface-tabs [data-surface="bathWall"] .tab-label').textContent = mode === '3d' ? 'Shower walls' : 'Shower wall';
+    for(const [key,look] of Object.entries(tileLooks))look.description=mode==='3d' ? panoramaLookDescriptions[key].replace(/around the mirror/g,'on the vanity wall').replace(/mirror wall/g,'vanity wall') : panoramaLookDescriptions[key];
+    const selectedLook=document.querySelector('#tryLook')?.dataset.look;
+    if(selectedLook && tileLooks[selectedLook])document.querySelector('#lookDescription').textContent=tileLooks[selectedLook].description;
     const roleSelector=document.querySelector('#meshRole');
-    if(roleSelector){roleSelector.querySelector('[value="mirrorWall"]').textContent='Feature wall';roleSelector.querySelector('[value="bathWall"]').textContent='Room walls';}
+    if(roleSelector){roleSelector.querySelector('[value="mirrorWall"]').textContent='Vanity wall';roleSelector.querySelector('[value="bathWall"]').textContent='Shower walls';}
     if(state.activeTarget){panelTitle.textContent=targets[state.activeTarget].title;panelText.textContent=targets[state.activeTarget].text;}
 
     window.setPanoramaView(mode === '360');
