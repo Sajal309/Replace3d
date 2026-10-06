@@ -16,6 +16,7 @@ async function main() {
     await fs.mkdir(path.dirname(destination),{recursive:true});
     await fs.copyFile(path.join(__dirname,file),destination);
   }
+  await fs.cp(path.join(__dirname, 'simpolo-2'), path.join(__dirname, 'dist', 'simpolo-2'), { recursive: true });
   console.log(`Prepared ${files.length} public files.`);
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

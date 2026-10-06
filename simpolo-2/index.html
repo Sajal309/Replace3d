@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Material Replacement</title>
+    <link rel="stylesheet" href="styles.css?v=flat-start-compact-brand-20260928-1" />
+    <link rel="stylesheet" href="panorama.css?v=panel-padding-20260928-3" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <div class="brand-band">
+        <img class="brand-logo" src="white-logo-400-x-252.webp" width="400" height="252" alt="Simpolo" />
+      </div>
+      <section class="workspace" aria-label="Bathroom material visualizer">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Bathroom collection</p>
+            <h1>3D Material Replacement</h1>
+          </div>
+          <button class="reset-button" id="resetButton" type="button">
+            <svg class="reset-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Reset all</span>
+          </button>
+        </header>
+
+        <div class="visualizer-card">
+          <div class="stage" id="stage">
+            <div class="viewport-toolbar">
+              <div class="view-switch compare-control" role="group" aria-label="Viewing mode"><button id="flatView" type="button" aria-pressed="true">Flat view</button><button id="panoramaView" type="button" aria-pressed="false">360&#176; view</button><button id="modelView" type="button" aria-pressed="false">3D walkthrough</button></div>
+        <div class="scene-toolbar"><div class="scene-actions"><button class="export-button" id="exportDesign" type="button" title="Download this design as a full-resolution 360° panorama"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg><span>Export design</span></button><div class="compare-control" role="group" aria-label="Compare designs"><button id="originalButton" type="button" aria-pressed="false">Original</button><button id="designButton" type="button" aria-pressed="true">Your design</button></div></div></div>
+            </div>
+            <div id="panorama" tabindex="0" role="application" aria-label="360 degree bathroom. Drag to look around, scroll to zoom, arrow keys to rotate."></div>
+            <div class="panorama-controls"><button id="zoomIn" type="button" title="Zoom in" aria-label="Zoom in">+</button><button id="zoomOut" type="button" title="Zoom out" aria-label="Zoom out">&minus;</button><button id="centerView" type="button">Recenter</button></div>
+            <img
+              class="base-image"
+              src="assets/bathroom-panorama.webp"
+              alt="Modern bathroom panorama with selectable floor, shower wall, and mirror wall surfaces"
+              draggable="false"
+            />
+
+            <svg class="replacement-map" id="replacementMap" viewBox="0 0 1779 884" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+            <svg class="hotspot-map" viewBox="0 0 1779 884" preserveAspectRatio="none" aria-label="Selectable replacement regions">
+              <g class="hotspot-button" data-target="floor" role="button" tabindex="0" aria-label="Select marble floor replacement">
+                <polygon
+                  class="hotspot-shape"
+                  points="0,704 105,685 260,696 472,690 563,672 735,706 918,712 1025,672 1160,694 1285,668 1438,662 1507,710 1620,708 1779,704 1779,884 0,884"
+                ></polygon>
+              </g>
+              <g class="hotspot-button" data-target="bathWall" role="button" tabindex="0" aria-label="Select shower wall replacement">
+                <polygon
+                  class="hotspot-shape"
+                  points="88,190 210,224 390,229 523,218 661,197 663,558 542,590 360,612 196,596 90,558"
+                ></polygon>
+              </g>
+            </svg>
+
+            <button class="surface-pin pin-floor" data-surface="floor" aria-label="Select floor" type="button">1</button>
+            <button class="surface-pin pin-wall" data-surface="bathWall" aria-label="Select shower wall" type="button">3</button>
+            <button class="surface-pin pin-mirrorWall" data-surface="mirrorWall" aria-label="Select mirror wall" type="button">+</button>
+          </div>
+          <div class="scene-footer"><span>Contemporary bathroom</span><span id="changeCount">Original finishes</span></div>
+        </div>
+
+        <aside class="material-panel" id="materialPanel" aria-live="polite">
+          <div class="panel-header"><p class="eyebrow">The design studio</p><h2>A room, reimagined.</h2><p>Find your mood. Make it yours.</p></div>
+          <div class="studio-tabs" role="group" aria-label="Design tools">
+            <button type="button" data-mode="individual" aria-pressed="true" aria-controls="individualPanel">Mix your own</button>
+            <button type="button" data-mode="looks" aria-pressed="false" aria-controls="looksPanel">Explore looks</button>
+          </div>
+          <div id="individualPanel">
+            <div class="surface-tabs" role="group" aria-label="Select a surface">
+              <button data-surface="floor" type="button" aria-pressed="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2 19h20L18.5 5h-13L2 19z"/><path d="M12 5v14"/><path d="M3.8 12h16.4"/></svg>
+                <span class="tab-label">Floor</span>
+              </button>
+              <button data-surface="mirrorWall" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.5h18"/><path d="M3 15h18"/><path d="M9 4v5.5"/><path d="M15 4v5.5"/><path d="M6 9.5v5.5"/><path d="M12 9.5v5.5"/><path d="M18 9.5v5.5"/><path d="M9 15v5"/><path d="M15 15v5"/></svg>
+                <span class="tab-label">Mirror wall</span>
+              </button>
+              <button data-surface="bathWall" type="button" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.5h18"/><path d="M3 15h18"/><path d="M9 4v5.5"/><path d="M15 4v5.5"/><path d="M6 9.5v5.5"/><path d="M12 9.5v5.5"/><path d="M18 9.5v5.5"/><path d="M9 15v5"/><path d="M15 15v5"/></svg>
+                <span class="tab-label">Shower wall</span>
+              </button>
+            </div>
+            <div class="panel-copy">
+              <div class="finish-heading"><h2 id="panelTitle">Choose a surface</h2><span id="optionCount">2 finishes</span></div>
+              <p id="panelText">Click a surface in the room or choose a tab to preview replacement materials.</p>
+            </div>
+            <div class="swatch-grid" id="swatchGrid"></div>
+          </div>
+          <div id="looksPanel" hidden>
+            <div class="look-intro"><span>ONE ROOM. TWO POSSIBILITIES.</span><p>A whole new atmosphere in one click.</p></div>
+            <div class="look-selector" role="group" aria-label="Browse complete looks">
+              <button type="button" data-preview="classic" aria-pressed="true"><strong>Soft Marble</strong></button>
+              <button type="button" data-preview="modern" aria-pressed="false"><strong>Earth &amp; Graphite</strong></button>
+            </div>
+            <article class="look-story">
+              <div class="look-art"><img id="lookImage" src="assets/bathroom-panorama.png" alt="Soft Marble bathroom preview" /><span class="look-tag" id="lookTag">CALM IN EVERY DETAIL</span><span class="look-number" id="lookNumber">01 / 02</span></div>
+              <div class="look-details">
+                <h3 id="lookTitle">Soft Marble</h3>
+                <p id="lookDescription">Belvedere Forest, Alps Dream and Alchimia Pearl.</p>
+                <div class="look-materials" id="lookMaterials" aria-label="Materials in this look"></div>
+                <button class="try-look" id="tryLook" data-look="classic" type="button" aria-pressed="false"><span>Try this look</span><span aria-hidden="true">↗</span></button>
+                <p class="look-reassurance" id="lookReassurance">3 coordinated tile finishes · Yours to remix</p>
+              </div>
+            </article>
+            <button class="remix-link" type="button" id="remixButton">Have something else in mind? <strong>Mix your own →</strong></button>
+          </div>
+          <span id="hintPill" role="status" aria-live="polite" class="sr-only">Original finishes</span>
+        </aside>
+      </section>
+      <footer class="app-footer"><span>3D MATERIAL REPLACEMENT</span><span>Bathroom collection</span></footer>
+    </main>
+
+    <link rel="stylesheet" href="walkthrough.css?v=20261006" />
+    <script src="raster-masks.js?v=user-mirror-wall-mask-20260928-v4"></script>
+    <script src="app.js?v=tiles-only-unrestricted-20260928"></script>
+    <script src="assets/three.min.js"></script>
+    <script src="panorama.js?v=mirror-wall-restored-20260928"></script>
+    <script src="mode-manager.js?v=20261006"></script>
+  </body>
+</html>
