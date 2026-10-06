@@ -12,7 +12,7 @@
       hintPill.textContent = 'Loading 3D studio…';
       document.querySelector('#modelView').disabled = true;
       try {
-        loading ||= import('./assets/walkthrough.bundle.js?v=20261006-reset-position-1');
+        loading ||= import('./assets/walkthrough.bundle.js?v=20261006-floor-marker-1');
         const module = await loading;
         if (!window.walkthrough) window.walkthrough = module.createWalkthrough();
       } catch (error) {
