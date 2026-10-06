@@ -7,8 +7,6 @@
 .model-tools button,.model-tools label.upload-model{border:1px solid #cbd8cf;border-radius:6px;padding:9px 11px;background:#fff;color:#235f50;font-size:12px;cursor:pointer}
 .model-tools button[aria-pressed=true]{background:#235f50;color:white}
 .model-tools .model-help{font-size:11px;color:#626d65;flex:1;min-width:200px;line-height:1.6}
-.model-status{display:none;font-size:12px;line-height:1.6;padding:10px 16px;background:#f3f6f3;color:#40594b}
-.visualizer-card:has(.is-3d) .model-status{display:block}
 .model-mapping{display:none;padding:18px 22px;border-top:1px solid #dedfd9;margin-top:16px;background:#f7f8f5}
 body:has(.is-3d) .model-mapping{display:block}
 .model-mapping h3{font-size:14px;margin:0 0 10px}.model-mapping p{font-size:11px;line-height:1.6;color:#68716b;margin:8px 0}
