@@ -13,7 +13,7 @@
       hintPill.textContent = 'Loading 3D studio…';
       document.querySelector('#modelView').disabled = true;
       try {
-        loading ||= import('./assets/walkthrough.bundle.js?v=20261006-vanity-light-3');
+        loading ||= import('./assets/walkthrough.bundle.js?v=20261006-shower-light-4');
         const module = await loading;
         if (!window.walkthrough) window.walkthrough = module.createWalkthrough();
       } catch (error) {

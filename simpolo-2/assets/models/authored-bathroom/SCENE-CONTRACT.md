@@ -16,3 +16,5 @@ The supplied _0 and _1 product sets have identical geometry and occupy identical
 To update this authored scene, replace these three files with exports using the same naming convention and shared coordinates, then run `npm run build`. Swappable meshes require UV coordinates. Wall/furniture collision proxies should form closed volumes; ground should provide upward-facing triangles.
 
 The vanity wall marker sits on the exposed gap between mirrors, rather than the occluded mesh bounding-box centre. The 3D categories are Floor, Vanity wall and Shower walls. Replacement shading includes a blurred, luminance-only approximation of source baked illumination, with per-category calibration. This preserves broad shadow gradients without retaining the original tile colour or fine pattern; it is not a separately authored irradiance lightmap.
+
+Shower replacement diffuse shading blends source-colour irradiance (70%) with runtime diffuse illumination (30%) before the baked light mask. This avoids double-darkening matte Leaf Raw. PBR specular remains active; vanity and floor calibration is independent.
