@@ -1,0 +1,50 @@
+:root{color-scheme:light}
+.header-actions{display:flex;align-items:center;gap:8px}
+.theme-toggle{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);font-size:12px;white-space:nowrap}
+.theme-toggle:hover{background:var(--soft)}
+.theme-toggle svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.theme-sun{display:none}
+html[data-theme=dark]{color-scheme:dark;--ink:#e7ece9;--muted:#a4b2aa;--line:#35413b;--accent:#8dc8b2;--soft:#283d33;background:#151b18}
+html[data-theme=dark] .brand-logo{filter:brightness(0) invert(1)}
+html[data-theme=dark] .theme-moon{display:none}
+html[data-theme=dark] .theme-sun{display:block}
+html[data-theme=dark] .material-panel,
+html[data-theme=dark] .reset-button,
+html[data-theme=dark] .theme-toggle,
+html[data-theme=dark] .export-button,
+html[data-theme=dark] .swatch-button,
+html[data-theme=dark] .look-button,
+html[data-theme=dark] .look-selector button,
+html[data-theme=dark] .studio-tabs button,
+html[data-theme=dark] .panorama-controls button,
+html[data-theme=dark] .model-tools label.upload-model{background:#202923;border-color:var(--line);color:var(--ink)}
+html[data-theme=dark] .compare-control,
+html[data-theme=dark] .studio-tabs,
+html[data-theme=dark] .surface-tabs button{background:#29332d;border-color:var(--line)}
+html[data-theme=dark] .compare-control button{color:var(--muted)}
+html[data-theme=dark] .compare-control button[aria-pressed=true]{background:#3b4b41;color:#f1f5f2}
+html[data-theme=dark] .surface-tabs button[aria-pressed=true],
+html[data-theme=dark] .swatch-button.is-selected,
+html[data-theme=dark] .look-selector button[aria-pressed=true]{background:var(--soft);border-color:#6c9d85;color:var(--accent)}
+html[data-theme=dark] .studio-tabs button[aria-pressed=true],
+html[data-theme=dark] .try-look{background:#326f59;border-color:#468467;color:white}
+html[data-theme=dark] .studio-tabs button:hover,
+html[data-theme=dark] .look-selector button:hover,
+html[data-theme=dark] .reset-button:hover,
+html[data-theme=dark] .export-button:hover,
+html[data-theme=dark] .theme-toggle:hover{background:var(--soft);border-color:#6c9d85}
+html[data-theme=dark] .look-story{background:#262f28}
+html[data-theme=dark] .look-details>p,
+html[data-theme=dark] .look-materials small{color:var(--muted)}
+html[data-theme=dark] .look-materials img{border-color:#3b4b41}
+html[data-theme=dark] .model-tools{background:#1b231e;border-color:var(--line)}
+html[data-theme=dark] .model-direction-pad{background:#202923f2;border-color:#475b4e;color:var(--accent)}
+html[data-theme=dark] .walk-navigation-ring button{color:var(--accent)}
+html[data-theme=dark] .walk-navigation-ring button:hover{color:white}
+html[data-theme=dark] .navigation-axis>span{color:var(--muted)}
+html[data-theme=dark] .model-loader{background:#202923;color:var(--ink)}
+html[data-theme=dark] .model-loader-spinner{border-color:#405347;border-top-color:var(--accent)}
+html[data-theme=dark] .app-footer{color:var(--muted)}
+@media(max-width:520px){.topbar{flex-wrap:wrap}.header-actions{margin-left:auto}.theme-toggle{padding:9px 10px;font-size:11px}}
+
+html[data-theme=dark] .surface-pin[aria-pressed=true],html[data-theme=dark] .panorama-pin[aria-pressed=true],html[data-theme=dark] #individualPanel .swatch-button.is-selected:after{background:#326f59;color:white}
