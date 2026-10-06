@@ -47,3 +47,6 @@ body:has(.is-3d) .look-art{display:none}
 .model-credit{margin-left:12px;color:var(--muted);font-size:10px;text-decoration:none}
 .model-credit:hover{text-decoration:underline}
 @media(max-width:600px){.scene-footer>span:first-child{display:flex;flex-direction:column;gap:5px}.model-credit{margin-left:0}.room-picker{flex:1}.room-picker select{width:100%;max-width:none}}
+
+.walk-fullscreen{position:absolute;right:16px;bottom:16px;z-index:8;border:1px solid var(--border,#d7e0da);border-radius:6px;background:var(--panel,#fff);color:var(--text,#235f50);padding:9px 12px;font:inherit;font-size:12px;cursor:pointer}
+#modelViewport:fullscreen,#modelViewport.walk-expanded{position:fixed;inset:0;width:100vw;height:100dvh;z-index:1000;display:block;border-radius:0}
