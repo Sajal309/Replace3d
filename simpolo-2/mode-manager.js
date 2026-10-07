@@ -13,7 +13,7 @@
       hintPill.textContent = 'Loading 3D studio…';
       document.querySelector('#modelView').disabled = true;
       try {
-        loading ||= import('./assets/walkthrough.bundle.js?v=20261007-centered-markers-reset');
+        loading ||= import('./assets/walkthrough.bundle.js?v=20261007-control-sizing');
         const module = await loading;
         if (!window.walkthrough) window.walkthrough = module.createWalkthrough();
       } catch (error) {
