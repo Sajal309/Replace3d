@@ -1,4 +1,46 @@
 const TILE_PREVIEW_REVISION = 'natural-pale-tiles-20260925-8';
+// The supplied image variant and the approved rendering are separate facts.
+// Keep the approved reflective presentation for the three existing finishes;
+// do not infer a product's reflection response from words in its ID.
+const tileFinishes = Object.freeze(Object.fromEntries(Object.entries({
+  'floor-belvedere-forest': {
+    name: 'Belvedere Forest', texture: 'floor-belvedere-forest.jpg',
+    collection: 'Marmorica', look: 'forest marble', finish: 'Sabbia matt',
+    roughness: .24, envMapIntensity: 1, planarReflection: true,
+    approvedReflectiveAppearance: true,
+  },
+  'floor-alchimia-graphite-raw': {
+    name: 'Alchimia Graphite Raw Texture', texture: 'floor-alchimia-graphite-raw.jpg',
+    collection: 'Alchimia', look: 'graphite concrete', finish: 'Matt punch · raw texture',
+    roughness: .78, envMapIntensity: .7, planarReflection: false,
+  },
+  'bathWall-alps-dream': {
+    name: 'Alps Dream', texture: 'bathWall-alps-dream.jpg',
+    collection: 'Marmorica', look: 'white marble', finish: 'Sabbia matt',
+    roughness: .48, envMapIntensity: 1, planarReflection: true,
+    approvedReflectiveAppearance: true,
+  },
+  'bathWall-alchimia-leaf-raw': {
+    name: 'Alchimia Leaf Raw Texture', texture: 'bathWall-alchimia-leaf-raw.jpg',
+    collection: 'Alchimia', look: 'muted green concrete', finish: 'Matt punch · raw texture',
+    roughness: .78, envMapIntensity: .7, planarReflection: false,
+  },
+  'mirrorWall-alchimia-pearl': {
+    name: 'Alchimia Pearl', texture: 'mirrorWall-alchimia-pearl.jpg',
+    collection: 'Alchimia', look: 'pearl white concrete', finish: 'Matt',
+    roughness: .4, envMapIntensity: 1, planarReflection: true,
+    approvedReflectiveAppearance: true,
+  },
+  'mirrorWall-alchimia-hazel-raw': {
+    name: 'Alchimia Hazel Raw Texture', texture: 'mirrorWall-alchimia-hazel-raw.jpg',
+    collection: 'Alchimia', look: 'warm hazel concrete', finish: 'Matt punch · raw texture',
+    roughness: .78, envMapIntensity: .7, planarReflection: false,
+  },
+}).map(([id, profile]) => [id, Object.freeze(profile)])));
+function tileOption(id) {
+  const profile = tileFinishes[id];
+  return { id, name: profile.name, meta: `${profile.collection} · ${profile.look} · ${profile.finish}` };
+}
 const tileLooks = {
   classic: {
     title: 'Soft Marble', tag: 'CALM IN EVERY DETAIL',
@@ -18,8 +60,8 @@ const targets = {
     hint: "Floor selected",
     defaultClass: "material-floor",
     options: [
-      { id: "floor-belvedere-forest", name: "Belvedere Forest", meta: "Marmorica · forest marble" },
-      { id: "floor-alchimia-graphite-raw", name: "Alchimia Graphite Raw Texture", meta: "Alchimia · graphite raw texture" },
+      tileOption('floor-belvedere-forest'),
+      tileOption('floor-alchimia-graphite-raw'),
       {
         id: "floor-classic",
         name: "Ivory Travertine",
@@ -40,8 +82,8 @@ const targets = {
     hint: "Shower wall selected",
     defaultClass: "material-bath-wall",
     options: [
-      { id: "bathWall-alps-dream", name: "Alps Dream", meta: "Marmorica · white marble · matt" },
-      { id: "bathWall-alchimia-leaf-raw", name: "Alchimia Leaf Raw Texture", meta: "Alchimia · muted green raw texture" },
+      tileOption('bathWall-alps-dream'),
+      tileOption('bathWall-alchimia-leaf-raw'),
       {
         id: "bathWall-classic",
         name: "Subway Brickwork",
@@ -62,8 +104,8 @@ const targets = {
     hint: "Mirror wall selected",
     defaultClass: "material-mirror-wall",
     options: [
-      { id: "mirrorWall-alchimia-pearl", name: "Alchimia Pearl", meta: "Alchimia · pearl white concrete" },
-      { id: "mirrorWall-alchimia-hazel-raw", name: "Alchimia Hazel Raw Texture", meta: "Alchimia · warm hazel raw texture" },
+      tileOption('mirrorWall-alchimia-pearl'),
+      tileOption('mirrorWall-alchimia-hazel-raw'),
     ],
   },
 };
@@ -413,5 +455,5 @@ previewLook('classic');
 setEditMode('individual');
 
 // Shared design-studio controls are reused by the lazy-loaded 3D mode.
-window.SimpoloStudio = { state, targets, tileLooks, setActiveTarget, setComparison,
+window.SimpoloStudio = { state, targets, tileLooks, tileFinishes, setActiveTarget, setComparison,
   renderSwatches, syncControls, hint: hintPill };
