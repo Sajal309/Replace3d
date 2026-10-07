@@ -21,7 +21,8 @@ body:has(.is-3d) .look-art{display:none}
 @media(max-width:600px){.stage.is-3d{min-height:360px}.viewport-toolbar .view-switch{max-width:100%}.model-mapping{padding:16px 18px}.model-tools{padding:10px}.model-tools .model-help{flex-basis:100%}}
 
 
-.model-surface-marker{position:absolute;z-index:8;transform:translate(-50%,-50%);width:34px;height:34px;border:1px solid #ffffffcc;border-radius:50%;background:#235f50e6;color:white;font-size:24px;line-height:1;cursor:pointer;box-shadow:0 2px 8px #0003}
+.model-surface-marker{position:absolute;z-index:8;transform:translate(-50%,-50%);display:grid;place-items:center;width:34px;height:34px;padding:0;border:1px solid #ffffffcc;border-radius:50%;background:#235f50e6;color:white;cursor:pointer;box-shadow:0 2px 8px #0003}
+.model-surface-marker svg{display:block;width:18px;height:18px;pointer-events:none}
 .model-surface-marker[hidden]{display:none}
 
 .model-loader{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#ecefe9;color:#235f50;font-size:14px}
@@ -30,8 +31,9 @@ body:has(.is-3d) .look-art{display:none}
 @keyframes room-loading{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.model-loader-spinner{animation:none}}
 
-.model-direction-pad{position:absolute;bottom:16px;left:16px;z-index:8;width:172px;padding:8px;display:flex;gap:26px;border:1px solid #d7e0da;border-radius:10px;background:#fffffff2;box-shadow:0 2px 8px #24332e12;color:#315f50;user-select:none}
+.model-direction-pad{position:absolute;bottom:16px;left:16px;z-index:8;width:172px;padding:8px;display:flex;flex-direction:column;gap:8px;border:1px solid #d7e0da;border-radius:10px;background:#fffffff2;box-shadow:0 2px 8px #24332e12;color:#315f50;user-select:none}
 .model-direction-pad[hidden]{display:none}
+.navigation-sticks{display:flex;gap:26px}
 .model-direction-pad .navigation-group{display:flex;flex-direction:column;flex:0 0 64px}
 .navigation-axis{display:flex;align-items:center;justify-content:center;height:16px;margin-top:4px;order:2}.navigation-axis svg{display:none}.navigation-axis>span{font-size:9px;letter-spacing:1.5px;font-weight:600;color:#687d72}
 .model-joystick{position:relative;width:64px;height:64px;padding:0;border:1px solid #bdcfc3;border-radius:50%;background:#eaf0ec80;color:#315f50;cursor:grab;touch-action:none}
@@ -40,8 +42,11 @@ body:has(.is-3d) .look-art{display:none}
 .model-joystick:focus-visible,.walk-reset-position:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 .joystick-thumb{position:absolute;left:50%;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:currentColor;box-shadow:0 2px 5px #24332e24;pointer-events:none;transform:translate(var(--joystick-x,0px),var(--joystick-y,0px));transition:transform .12s ease-out}
 .model-joystick.is-active .joystick-thumb{transition:none}
-.model-direction-pad .walk-reset-position{position:absolute;width:24px;height:24px;left:73px;top:29px;display:flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;color:#315f50;cursor:pointer;border-radius:50%}
-.walk-reset-position svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.model-direction-pad .walk-reset-position{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:44px;padding:8px 10px;border:1px solid #d7e0da;border-radius:6px;background:#f3f6f4;color:#315f50;font-size:11px;font-weight:550;cursor:pointer;touch-action:manipulation}
+.model-direction-pad .walk-reset-position:hover{background:#eaf1ed;border-color:#91afa5}
+.model-direction-pad .walk-reset-position:active{background:#e0ebe4}
+.walk-reset-position svg{display:block;width:16px;height:16px;flex-shrink:0;pointer-events:none}
+@media(max-width:600px){.model-direction-pad{width:164px;padding-block:6px;gap:4px}.navigation-sticks{gap:18px}.navigation-axis{height:12px;margin-top:2px}}
 @media(prefers-reduced-motion:reduce){.joystick-thumb{transition:none}}
 
 .room-picker{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
